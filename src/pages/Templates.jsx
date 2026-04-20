@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 
 function Templates() {
   const [templates, setTemplates] = useState([]);
-  const [templateName, setTemplateName] = useState("");
+  const [selectedTemplate, setSelectedTemplate] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchTemplates();
@@ -16,34 +18,42 @@ function Templates() {
     setTemplates(response.data);
   }
 
-  async function handleCreateTemplate() {
-    const response = await api.post("/templates", {
-      name: templateName,
-      exercises: [],
-    });
-
-    await fetchTemplates();
+  async function handleStartSession(templateId) {
+    const response = await api.post(`/sessions/${templateId}`);
+    navigate(`/active-workout/${response.data.id}`);
   }
 
   return (
     <div>
       <h1>Templates</h1>
       {templates.map((template) => (
-        <div key={template.id}>
+        <div key={template.id} onClick={() => setSelectedTemplate(template)}>
           <p>{template.name}</p>
         </div>
       ))}
 
-      <input
-        type="text"
-        placeholder="Template Name"
-        value={templateName}
-        onChange={(e) => setTemplateName(e.target.value)}
-      />
+      <button onClick={() => navigate("/create-template")}>
+        Create Template
+      </button>
 
-      <br />
-
-      <button onClick={handleCreateTemplate}>Create Template</button>
+      {selectedTemplate && (
+        <div>
+          <h2>{selectedTemplate.name}</h2>
+          <button onClick={() => handleStartSession(selectedTemplate.id)}>
+            Start Session
+          </button>
+          <button>Edit template</button>
+          <button onClick={() => setSelectedTemplate(null)}>Close</button>
+          {selectedTemplate.templateExercises.map((te) => (
+            <div key={te.id}>
+              <p>
+                {te.exercise.name} - {te.defaultSets} sets x {te.defaultReps}{" "}
+                reps @ {te.defaultWeight}kg
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
