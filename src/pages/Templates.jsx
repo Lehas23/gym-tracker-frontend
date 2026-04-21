@@ -23,6 +23,12 @@ function Templates() {
     navigate(`/active-workout/${response.data.id}`);
   }
 
+  async function handleDeleteTemplate(templateId) {
+    await api.delete(`/templates/${templateId}`);
+    setSelectedTemplate(null);
+    fetchTemplates();
+  }
+
   return (
     <div>
       <h1>Templates</h1>
@@ -43,6 +49,9 @@ function Templates() {
             Start Session
           </button>
           <button>Edit template</button>
+          <button onClick={() => handleDeleteTemplate(selectedTemplate.id)}>
+            Delete Template
+          </button>
           <button onClick={() => setSelectedTemplate(null)}>Close</button>
           {selectedTemplate.templateExercises.map((te) => (
             <div key={te.id}>

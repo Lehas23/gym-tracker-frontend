@@ -6,10 +6,13 @@ import Templates from "./pages/Templates";
 import ActiveWorkout from "./pages/ActiveWorkout";
 import Sessions from "./pages/Sessions";
 import CreateTemplate from "./pages/CreateTemplate";
+import { Link } from "react-router-dom";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <BrowserRouter>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
