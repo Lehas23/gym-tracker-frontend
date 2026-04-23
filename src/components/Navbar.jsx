@@ -9,7 +9,6 @@ function Navbar() {
       <Link to="/templates" style={{ marginRight: "16px" }}>
         Templates
       </Link>
-      <Link to="/sessions">Sessions</Link>
     </nav>
   );
 }

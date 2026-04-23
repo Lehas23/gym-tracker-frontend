@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 
 function CreateTemplate() {
@@ -6,12 +7,15 @@ function CreateTemplate() {
   const [selectExercises, setSelectExercises] = useState([]);
   const [searchExercise, setSearchExercise] = useState("");
   const [searchResult, setSearchResult] = useState([]);
+  const [pendingExercise, setPendingExercise] = useState(null);
+  const navigate = useNavigate();
 
   async function handleCreateTemplate() {
     const response = await api.post("/templates", {
       name: templateName,
       exercises: selectExercises,
     });
+    navigate("/templates");
   }
 
   async function handleExerciseSearch() {
@@ -21,16 +25,24 @@ function CreateTemplate() {
   }
 
   function handleAddExercise(exercise) {
-    setSelectExercises([
-      ...selectExercises,
-      {
-        exerciseId: exercise.id,
-        name: exercise.name,
-        defaultSets: 3,
-        defaultReps: 8,
-        defaultWeight: 0,
-      },
-    ]);
+    setPendingExercise({
+      exerciseId: exercise.id,
+      name: exercise.name,
+      defaultSets: 3,
+      defaultReps: 8,
+      defaultWeight: 0,
+    });
+  }
+
+  function handleConfirmExercise() {
+    setSelectExercises([...selectExercises, pendingExercise]);
+    setPendingExercise(null);
+  }
+
+  function handleRemoveExercise(exercise) {
+    setSelectExercises(
+      selectExercises.filter((e) => e.exerciseId !== exercise.exerciseId),
+    );
   }
 
   return (
@@ -56,7 +68,8 @@ function CreateTemplate() {
       <h3>Selected Exercises</h3>
       {selectExercises.map((exercise, index) => (
         <div key={index}>
-          <p>{exercise.name}</p>
+          <span>{exercise.name}</span>
+          <button onClick={() => handleRemoveExercise(exercise)}>Remove</button>
         </div>
       ))}
       {searchResult.map((exercise) => (
@@ -67,6 +80,48 @@ function CreateTemplate() {
           <button onClick={() => handleAddExercise(exercise)}>Add</button>
         </div>
       ))}
+
+      {pendingExercise && (
+        <div>
+          <h3>Configure {pendingExercise.name}</h3>
+          <label>Sets</label>
+          <input
+            type="number"
+            value={pendingExercise.defaultSets}
+            onChange={(e) =>
+              setPendingExercise({
+                ...pendingExercise,
+                defaultSets: Number(e.target.value),
+              })
+            }
+          />
+          <label>Reps</label>
+          <input
+            type="number"
+            value={pendingExercise.defaultReps}
+            onChange={(e) =>
+              setPendingExercise({
+                ...pendingExercise,
+                defaultReps: Number(e.target.value),
+              })
+            }
+          />
+          <label>Weight (kg)</label>
+          <input
+            type="number"
+            value={pendingExercise.defaultWeight}
+            onChange={(e) =>
+              setPendingExercise({
+                ...pendingExercise,
+                defaultWeight: Number(e.target.value),
+              })
+            }
+          />
+          <button onClick={handleConfirmExercise}>Confirm</button>
+          <button onClick={() => setPendingExercise(null)}>Cancel</button>
+          <button onClick={() => handleRemoveExercise(exercise)}>Remove</button>
+        </div>
+      )}
 
       <button onClick={handleCreateTemplate}>Create Template</button>
     </div>
