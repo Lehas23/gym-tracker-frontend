@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
+import MainLayout from "../components/MainLayout";
 
 function CreateTemplate() {
   const [templateName, setTemplateName] = useState("");
@@ -46,85 +47,91 @@ function CreateTemplate() {
   }
 
   return (
-    <div>
-      <h1>Create Template</h1>
+    <MainLayout>
+      <div>
+        <h1>Create Template</h1>
 
-      <input
-        type="text"
-        placeholder="Template Title"
-        value={templateName}
-        onChange={(e) => setTemplateName(e.target.value)}
-      />
+        <input
+          type="text"
+          placeholder="Template Title"
+          value={templateName}
+          onChange={(e) => setTemplateName(e.target.value)}
+        />
 
-      <input
-        type="text"
-        placeholder="Search Exercises"
-        value={searchExercise}
-        onChange={(e) => {
-          setSearchExercise(e.target.value);
-          handleExerciseSearch();
-        }}
-      />
-      <h3>Selected Exercises</h3>
-      {selectExercises.map((exercise, index) => (
-        <div key={index}>
-          <span>{exercise.name}</span>
-          <button onClick={() => handleRemoveExercise(exercise)}>Remove</button>
-        </div>
-      ))}
-      {searchResult.map((exercise) => (
-        <div key={exercise.id}>
-          <p>
-            {exercise.name} - {exercise.muscleGroup}
-          </p>
-          <button onClick={() => handleAddExercise(exercise)}>Add</button>
-        </div>
-      ))}
+        <input
+          type="text"
+          placeholder="Search Exercises"
+          value={searchExercise}
+          onChange={(e) => {
+            setSearchExercise(e.target.value);
+            handleExerciseSearch();
+          }}
+        />
+        <h3>Selected Exercises</h3>
+        {selectExercises.map((exercise, index) => (
+          <div key={index}>
+            <span>{exercise.name}</span>
+            <button onClick={() => handleRemoveExercise(exercise)}>
+              Remove
+            </button>
+          </div>
+        ))}
+        {searchResult.map((exercise) => (
+          <div key={exercise.id}>
+            <p>
+              {exercise.name} - {exercise.muscleGroup}
+            </p>
+            <button onClick={() => handleAddExercise(exercise)}>Add</button>
+          </div>
+        ))}
 
-      {pendingExercise && (
-        <div>
-          <h3>Configure {pendingExercise.name}</h3>
-          <label>Sets</label>
-          <input
-            type="number"
-            value={pendingExercise.defaultSets}
-            onChange={(e) =>
-              setPendingExercise({
-                ...pendingExercise,
-                defaultSets: Number(e.target.value),
-              })
-            }
-          />
-          <label>Reps</label>
-          <input
-            type="number"
-            value={pendingExercise.defaultReps}
-            onChange={(e) =>
-              setPendingExercise({
-                ...pendingExercise,
-                defaultReps: Number(e.target.value),
-              })
-            }
-          />
-          <label>Weight (kg)</label>
-          <input
-            type="number"
-            value={pendingExercise.defaultWeight}
-            onChange={(e) =>
-              setPendingExercise({
-                ...pendingExercise,
-                defaultWeight: Number(e.target.value),
-              })
-            }
-          />
-          <button onClick={handleConfirmExercise}>Confirm</button>
-          <button onClick={() => setPendingExercise(null)}>Cancel</button>
-          <button onClick={() => handleRemoveExercise(exercise)}>Remove</button>
-        </div>
-      )}
+        {pendingExercise && (
+          <div>
+            <h3>Configure {pendingExercise.name}</h3>
+            <label>Sets</label>
+            <input
+              type="number"
+              value={pendingExercise.defaultSets}
+              onChange={(e) =>
+                setPendingExercise({
+                  ...pendingExercise,
+                  defaultSets: Number(e.target.value),
+                })
+              }
+            />
+            <label>Reps</label>
+            <input
+              type="number"
+              value={pendingExercise.defaultReps}
+              onChange={(e) =>
+                setPendingExercise({
+                  ...pendingExercise,
+                  defaultReps: Number(e.target.value),
+                })
+              }
+            />
+            <label>Weight (kg)</label>
+            <input
+              type="number"
+              value={pendingExercise.defaultWeight}
+              onChange={(e) =>
+                setPendingExercise({
+                  ...pendingExercise,
+                  defaultWeight: Number(e.target.value),
+                })
+              }
+            />
+            <button onClick={handleConfirmExercise}>Confirm</button>
+            <button onClick={() => setPendingExercise(null)}>Cancel</button>
+            <button onClick={() => handleRemoveExercise(exercise)}>
+              Remove
+            </button>
+          </div>
+        )}
 
-      <button onClick={handleCreateTemplate}>Create Template</button>
-    </div>
+        <button onClick={handleCreateTemplate}>Create Template</button>
+      </div>
+    </MainLayout>
   );
 }
 

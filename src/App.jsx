@@ -12,11 +12,9 @@ import { useLocation } from "react-router-dom";
 
 function AppContent() {
   const location = useLocation();
-  const hideNavbar = ["/", "/register"].includes(location.pathname);
 
   return (
     <>
-      {!hideNavbar && <Navbar />}
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
