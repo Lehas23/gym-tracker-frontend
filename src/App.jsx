@@ -6,6 +6,7 @@ import Templates from "./pages/Templates";
 import ActiveWorkout from "./pages/ActiveWorkout";
 import CreateTemplate from "./pages/CreateTemplate";
 import SessionDetail from "./pages/SessionDetail";
+import TemplateDetail from "./pages/TemplateDetail";
 import { Link } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import { useLocation } from "react-router-dom";
@@ -23,6 +24,7 @@ function AppContent() {
         <Route path="/active-workout/:sessionId" element={<ActiveWorkout />} />
         <Route path="/create-template" element={<CreateTemplate />} />
         <Route path="/sessions/:sessionId" element={<SessionDetail />} />
+        <Route path="/templates/:id" element={<TemplateDetail />} />
       </Routes>
     </>
   );
