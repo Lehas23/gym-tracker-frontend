@@ -61,7 +61,10 @@ function TemplateDetail() {
         </div>
 
         <div className="flex gap-3">
-          <button className="border border-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-50 transition-colors cursor-pointer">
+          <button
+            onClick={() => navigate(`/templates/${id}/edit`)}
+            className="border border-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-50 transition-colors cursor-pointer"
+          >
             Edit Template
           </button>
           <button

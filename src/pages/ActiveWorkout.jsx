@@ -49,18 +49,44 @@ function ActiveWorkout() {
 
   return (
     <MainLayout>
-      <div>
-        <h1>{session.templateName}</h1>
+      <div className="max-w-2xl">
+        <h1 className="text-2xl font-bold text-gray-900">
+          {session.templateName}
+        </h1>
+        <button
+          onClick={() => {
+            if (
+              window.confirm("Are you sure you want to finish your session?")
+            ) {
+              fetchSession();
+              setShowRecap(true);
+            }
+          }}
+          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors cursor-pointer"
+        >
+          Finish Session
+        </button>
+
         {session.exercises.map((exercise) => (
-          <div key={exercise.exerciseName}>
-            <h2>{exercise.exerciseName}</h2>
+          <div
+            key={exercise.exerciseName}
+            className="bg-white rounded-lg shadow-md p-6 mb-4"
+          >
+            <h2 className="font-semibold text-gray-900 mb-4">
+              {exercise.exerciseName}
+            </h2>
+            <div className="flex gap-4 text-xs text-gray-500 font-medium mb-2 px-1">
+              <span className="w-12">Set</span>
+              <span className="w-24">Reps</span>
+              <span className="w-24">Weight (kg)</span>
+            </div>
             {exercise.sets.map((set) => (
-              <div key={set.id}>
-                <p>Set {set.setNumber}</p>
-                <label>Reps</label>
+              <div key={set.id} className="flex gap-4 items-center mb-2">
+                <span className="w-12 text-sm text-gray-500">
+                  {set.setNumber}
+                </span>
                 <input
                   type="number"
-                  placeholder="Reps"
                   value={setEdits[set.id]?.reps ?? set.reps}
                   onChange={(e) =>
                     setSetEdits({
@@ -73,8 +99,8 @@ function ActiveWorkout() {
                       },
                     })
                   }
+                  className="w-24 bg-gray-100 text-gray-900 p-2 rounded border border-gray-300 outline-none"
                 />
-                <label>Weight (kg)</label>
                 <input
                   type="number"
                   value={setEdits[set.id]?.weight ?? set.weight}
@@ -85,16 +111,23 @@ function ActiveWorkout() {
                         ...setEdits[set.id],
                         weight: Number(e.target.value),
                         reps: setEdits[set.id]?.reps ?? set.reps,
-                        setNumber: set.setNumber,
+                        setnumber: set.setNumber,
                       },
                     })
                   }
+                  className="w-24 bg-gray-100 text-gray-900 p-2 rounded border border-gray-300 outline-none"
                 />
-                <button onClick={() => handleUpdateSetDuringSession(set.id)}>
+                <button
+                  onClick={() => handleUpdateSetDuringSession(set.id)}
+                  className="text-blue-600 text-sm hover:underline cursor-pointer"
+                >
                   Save
                 </button>
-                <button onClick={() => handleDeleteSetDuringSession(set.id)}>
-                  Delete
+                <button
+                  onClick={() => handleDeleteSetDuringSession(set.id)}
+                  className="text-red-400 hover:text-red-600 cursor-pointer"
+                >
+                  X
                 </button>
               </div>
             ))}
@@ -105,39 +138,39 @@ function ActiveWorkout() {
                   exercise.sets.length,
                 )
               }
-            ></button>
-
-            <button
-              onClick={() => {
-                if (
-                  window.confirm(
-                    "Are you sure you want to finish your session?",
-                  )
-                ) {
-                  fetchSession();
-                  setShowRecap(true);
-                }
-              }}
+              className="mt-2 text-blue-600 text-sm hover:underline cursor-pointer"
             >
-              Finish Session
+              + Add Set
             </button>
           </div>
         ))}
+
         {showRecap && (
-          <div>
-            <h2>Session Complete!</h2>
-            <p>{session.templateName}</p>
-            {session.exercises.map((exercise) => (
-              <div key={exercise.exerciseName}>
-                <h3>{exercise.exerciseName}</h3>
-                {exercise.sets.map((set) => (
-                  <p key={set.id}>
-                    Set {set.setNumber} - {set.reps} reps @ {set.weight}kg
-                  </p>
-                ))}
-              </div>
-            ))}
-            <button onClick={() => navigate("/profile")}>Done</button>
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white rounded-lg shadow-xl p-8 max-w-md w-full mx-4">
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                Session Complete!
+              </h2>
+              <p className="text-gray-500 mb-6">{session.templateName}</p>
+              {session.exercises.map((exercise) => (
+                <div key={exercise.exerciseName} className="mb-4">
+                  <h3 className="font-semibold text-gray-900">
+                    {exercise.exerciseName}
+                  </h3>
+                  {exercise.sets.map((set) => (
+                    <p key={set.id} className="text-sm text-gray-500 mt-1">
+                      Set {set.setNumber} - {set.reps} reps @ {set.weight}kg
+                    </p>
+                  ))}
+                </div>
+              ))}
+              <button
+                onClick={() => navigate("/profile")}
+                className="w-full bg-blue-600 text-white p-3 rounded font-semibold hover:bg-blue-700 transition-colors cursor-pointer mt-4"
+              >
+                Done
+              </button>
+            </div>
           </div>
         )}
       </div>
