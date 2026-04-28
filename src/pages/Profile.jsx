@@ -31,7 +31,10 @@ function Profile() {
                 </h1>
                 <p className="text-gray-500 text-sm">{user.email}</p>
               </div>
-              <button className="border border-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-50 transition-colors cursor-pointer">
+              <button
+                onClick={() => navigate("/settings")}
+                className="border border-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-50 transition-colors cursor-pointer"
+              >
                 Edit Profile
               </button>
             </div>

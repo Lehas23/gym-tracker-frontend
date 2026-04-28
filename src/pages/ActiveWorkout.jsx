@@ -32,9 +32,8 @@ function ActiveWorkout() {
     fetchSession();
   }
 
-  async function handleUpdateSetDuringSession(setId) {
-    const edit = setEdits[setId];
-    const response = await api.put(`/sessions/${sessionId}/sets/${setId}`, {
+  async function handleUpdateSetDuringSession(setId, edit) {
+    await api.put(`/sessions/${sessionId}/sets/${setId}`, {
       reps: edit.reps,
       weight: edit.weight,
       setNumber: edit.setNumber,
@@ -50,22 +49,27 @@ function ActiveWorkout() {
   return (
     <MainLayout>
       <div className="max-w-2xl">
-        <h1 className="text-2xl font-bold text-gray-900">
-          {session.templateName}
-        </h1>
-        <button
-          onClick={() => {
-            if (
-              window.confirm("Are you sure you want to finish your session?")
-            ) {
-              fetchSession();
-              setShowRecap(true);
-            }
-          }}
-          className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors cursor-pointer"
-        >
-          Finish Session
-        </button>
+        <div className="flex items-center justify-between mb-6">
+          <h1 className="text-2xl font-bold text-gray-900">
+            {session.templateName}
+          </h1>
+          <button
+            onClick={async () => {
+              if (
+                window.confirm("Are you sure you want to finish your session?")
+              ) {
+                for (const [setId, edit] of Object.entries(setEdits)) {
+                  await handleUpdateSetDuringSession(Number(setId), edit);
+                }
+                fetchSession();
+                setShowRecap(true);
+              }
+            }}
+            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors cursor-pointer"
+          >
+            Finish Session
+          </button>
+        </div>
 
         {session.exercises.map((exercise) => (
           <div
@@ -111,18 +115,12 @@ function ActiveWorkout() {
                         ...setEdits[set.id],
                         weight: Number(e.target.value),
                         reps: setEdits[set.id]?.reps ?? set.reps,
-                        setnumber: set.setNumber,
+                        setNumber: set.setNumber,
                       },
                     })
                   }
                   className="w-24 bg-gray-100 text-gray-900 p-2 rounded border border-gray-300 outline-none"
                 />
-                <button
-                  onClick={() => handleUpdateSetDuringSession(set.id)}
-                  className="text-blue-600 text-sm hover:underline cursor-pointer"
-                >
-                  Save
-                </button>
                 <button
                   onClick={() => handleDeleteSetDuringSession(set.id)}
                   className="text-red-400 hover:text-red-600 cursor-pointer"
