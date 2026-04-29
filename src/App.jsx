@@ -9,6 +9,7 @@ import SessionDetail from "./pages/SessionDetail";
 import TemplateDetail from "./pages/TemplateDetail";
 import EditTemplate from "./pages/EditTemplate";
 import Settings from "./pages/Settings";
+import { ThemeProvider } from "./context/ThemeContext";
 import { Link } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import { useLocation } from "react-router-dom";
@@ -36,9 +37,11 @@ function AppContent() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <AppContent />
-    </BrowserRouter>
+    <ThemeProvider>
+      <BrowserRouter>
+        <AppContent />
+      </BrowserRouter>
+    </ThemeProvider>
   );
 }
 

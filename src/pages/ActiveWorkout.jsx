@@ -50,7 +50,7 @@ function ActiveWorkout() {
     <MainLayout>
       <div className="max-w-2xl">
         <div className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-bold text-gray-900">
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
             {session.templateName}
           </h1>
           <button
@@ -74,19 +74,19 @@ function ActiveWorkout() {
         {session.exercises.map((exercise) => (
           <div
             key={exercise.exerciseName}
-            className="bg-white rounded-lg shadow-md p-6 mb-4"
+            className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-4"
           >
-            <h2 className="font-semibold text-gray-900 mb-4">
+            <h2 className="font-semibold text-gray-900 dark:text-white mb-4">
               {exercise.exerciseName}
             </h2>
-            <div className="flex gap-4 text-xs text-gray-500 font-medium mb-2 px-1">
+            <div className="flex gap-4 text-xs text-gray-500 dark:text-gray-400 font-medium mb-2 px-1">
               <span className="w-12">Set</span>
               <span className="w-24">Reps</span>
               <span className="w-24">Weight (kg)</span>
             </div>
             {exercise.sets.map((set) => (
               <div key={set.id} className="flex gap-4 items-center mb-2">
-                <span className="w-12 text-sm text-gray-500">
+                <span className="w-12 text-sm text-gray-500 dark:text-gray-400">
                   {set.setNumber}
                 </span>
                 <input
@@ -103,7 +103,7 @@ function ActiveWorkout() {
                       },
                     })
                   }
-                  className="w-24 bg-gray-100 text-gray-900 p-2 rounded border border-gray-300 outline-none"
+                  className="w-24 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white p-2 rounded border border-gray-300 dark:border-gray-600 outline-none"
                 />
                 <input
                   type="number"
@@ -119,7 +119,7 @@ function ActiveWorkout() {
                       },
                     })
                   }
-                  className="w-24 bg-gray-100 text-gray-900 p-2 rounded border border-gray-300 outline-none"
+                  className="w-24 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white p-2 rounded border border-gray-300 dark:border-gray-600 outline-none"
                 />
                 <button
                   onClick={() => handleDeleteSetDuringSession(set.id)}
@@ -136,7 +136,7 @@ function ActiveWorkout() {
                   exercise.sets.length,
                 )
               }
-              className="mt-2 text-blue-600 text-sm hover:underline cursor-pointer"
+              className="mt-2 text-blue-500 dark:text-blue-400 text-sm hover:underline cursor-pointer"
             >
               + Add Set
             </button>
@@ -145,18 +145,23 @@ function ActiveWorkout() {
 
         {showRecap && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg shadow-xl p-8 max-w-md w-full mx-4">
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-8 max-w-md w-full mx-4">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
                 Session Complete!
               </h2>
-              <p className="text-gray-500 mb-6">{session.templateName}</p>
+              <p className="text-gray-500 dark:text-gray-400 mb-6">
+                {session.templateName}
+              </p>
               {session.exercises.map((exercise) => (
                 <div key={exercise.exerciseName} className="mb-4">
-                  <h3 className="font-semibold text-gray-900">
+                  <h3 className="font-semibold text-gray-900 dark:text-white">
                     {exercise.exerciseName}
                   </h3>
                   {exercise.sets.map((set) => (
-                    <p key={set.id} className="text-sm text-gray-500 mt-1">
+                    <p
+                      key={set.id}
+                      className="text-sm text-gray-500 dark:text-gray-400 mt-1"
+                    >
                       Set {set.setNumber} - {set.reps} reps @ {set.weight}kg
                     </p>
                   ))}

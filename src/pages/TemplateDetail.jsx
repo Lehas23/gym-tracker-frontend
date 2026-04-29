@@ -34,9 +34,9 @@ function TemplateDetail() {
   return (
     <MainLayout>
       <div className="max-w-2xl">
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-gray-900">
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
               {template.name}
             </h1>
             <button
@@ -48,11 +48,13 @@ function TemplateDetail() {
           </div>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
           {template.templateExercises.map((te) => (
             <div key={te.id} className="mb-4">
-              <p className="font-semibold text-gray-900">{te.exercise.name}</p>
-              <p className="text-sm text-gray-500">
+              <p className="font-semibold text-gray-900 dark:text-white">
+                {te.exercise.name}
+              </p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
                 {te.defaultSets} sets x {te.defaultReps} reps @{" "}
                 {te.defaultWeight}kg
               </p>
@@ -63,13 +65,13 @@ function TemplateDetail() {
         <div className="flex gap-3">
           <button
             onClick={() => navigate(`/templates/${id}/edit`)}
-            className="border border-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-50 transition-colors cursor-pointer"
+            className="border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 px-4 py-2 rounded hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors cursor-pointer"
           >
             Edit Template
           </button>
           <button
             onClick={handleDeleteTemplate}
-            className="border border-red-300 text-red-500 px-4 py-2 rounded hover:bg-red-50 transition-colors cursor-pointer"
+            className="border border-red-300 dark:border-red-700 text-red-500 px-4 py-2 rounded hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors cursor-pointer"
           >
             Delete Template
           </button>

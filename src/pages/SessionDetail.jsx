@@ -21,29 +21,31 @@ function SessionDetail() {
   return (
     <MainLayout>
       <div className="max-w-2xl">
-        <h1 className="text-2xl font-bold text-gray-900 mb-6">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
           {session.templateName}
         </h1>
         {session.exercises.map((exercise) => (
           <div
             key={exercise.exerciseName}
-            className="bg-white rounded-lg shadow-md p-6 mb-4"
+            className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-4"
           >
-            <h2 className="font-semibold text-gray-900 mb-4">
+            <h2 className="font-semibold text-gray-900 dark:text-white mb-4">
               {exercise.exerciseName}
             </h2>
-            <div className="flex gap-8 text-xs text-gray-500 font-medium mb-2">
+            <div className="flex gap-8 text-xs text-gray-500 dark:text-gray-400 font-medium mb-2">
               <span className="w-8">Set</span>
               <span className="w-16">Reps</span>
               <span className="w-16">Weight</span>
             </div>
             {exercise.sets.map((set) => (
               <div key={set.id} className="flex gap-8 items-center mb-2">
-                <span className="w-8 text-sm text-gray-500">
+                <span className="w-8 text-sm text-gray-500 dark:text-gray-400">
                   {set.setNumber}
                 </span>
-                <span className="w-16 text-sm text-gray-900">{set.reps}</span>
-                <span className="w-16 text-sm text-gray-900">
+                <span className="w-16 text-sm text-gray-900 dark:text-white">
+                  {set.reps}
+                </span>
+                <span className="w-16 text-sm text-gray-900 dark:text-white">
                   {set.weight}kg
                 </span>
               </div>

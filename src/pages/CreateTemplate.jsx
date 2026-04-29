@@ -73,7 +73,7 @@ function CreateTemplate() {
 
   return (
     <MainLayout>
-      <div className="bg-gray-50 min-h-screen py-6">
+      <div className="min-h-screen py-6">
         <div className="max-w-6xl mx-auto flex gap-6 px-4">
           {/* Left side */}
           <div className="flex-1">
@@ -81,11 +81,11 @@ function CreateTemplate() {
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => navigate("/templates")}
-                  className="text-gray-500 hover:text-gray-900 cursor-pointer"
+                  className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer"
                 >
                   ←
                 </button>
-                <h1 className="text-2xl font-bold text-gray-900">
+                <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
                   Create Template
                 </h1>
               </div>
@@ -103,34 +103,34 @@ function CreateTemplate() {
                 placeholder="Template Name"
                 value={templateName}
                 onChange={(e) => setTemplateName(e.target.value)}
-                className="w-full bg-white text-gray-900 p-3 rounded border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
+                className="w-full bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 p-3 rounded border border-gray-300 dark:border-gray-600 outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
               />
             </div>
 
             {selectExercises.map((exercise, exerciseIndex) => (
               <div
                 key={exercise.exerciseId}
-                className="bg-white rounded-lg shadow-md p-6 mb-4"
+                className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-4"
               >
                 <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-semibold text-gray-900">
+                  <h3 className="font-semibold text-gray-900 dark:text-white">
                     {exercise.name}
                   </h3>
                   <button
                     onClick={() => handleRemoveExercise(exercise)}
-                    className="text-red-500 text-sm hover:underlin cursor-pointer"
+                    className="text-red-500 text-sm hover:underline cursor-pointer"
                   >
                     Remove
                   </button>
                 </div>
-                <div className="flex gap-4 text-xs text-gray-500 font-medium mb-2 px-1">
+                <div className="flex gap-4 text-xs text-gray-500 dark:text-gray-400 font-medium mb-2 px-1">
                   <span className="w-12">Set</span>
                   <span className="w-24">Reps</span>
                   <span className="w-24">Weight (kg)</span>
                 </div>
                 {exercise.sets.map((set, setIndex) => (
                   <div key={setIndex} className="flex gap-4 items-center mb-2">
-                    <span className="w-12 text-sm text-gray-500">
+                    <span className="w-12 text-sm text-gray-500 dark:text-gray-400">
                       {set.setNumber}
                     </span>
                     <input
@@ -144,7 +144,7 @@ function CreateTemplate() {
                           e.target.value,
                         )
                       }
-                      className="w-24 bg-gray-100 text-gray-900 p-2 rounded border border-gray-300 outline-none"
+                      className="w-24 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white p-2 rounded border border-gray-300 dark:border-gray-600 outline-none"
                     />
                     <input
                       type="number"
@@ -157,7 +157,7 @@ function CreateTemplate() {
                           e.target.value,
                         )
                       }
-                      className="w-24 bg-gray-100 text-gray-900 p-2 rounded border border-gray-300 outline-none"
+                      className="w-24 bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white p-2 rounded border border-gray-300 dark:border-gray-600 outline-none"
                     />
                     <button
                       onClick={() => handleRemoveSet(exerciseIndex, setIndex)}
@@ -169,7 +169,7 @@ function CreateTemplate() {
                 ))}
                 <button
                   onClick={() => handleAddSet(exerciseIndex)}
-                  className="mt-2 text-blue-600 text-sm hover:underline cursor-pointer"
+                  className="mt-2 text-blue-600 dark:text-blue-400 text-sm hover:underline cursor-pointer"
                 >
                   + Add Set
                 </button>
@@ -179,8 +179,8 @@ function CreateTemplate() {
 
           {/* Right side - Exercise Library */}
           <div className="w-80">
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-5 sticky top-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 p-5 sticky top-6">
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
                 Exercise Library
               </h2>
               <input
@@ -191,19 +191,19 @@ function CreateTemplate() {
                   setSearchExercise(e.target.value);
                   handleExerciseSearch();
                 }}
-                className="w-full bg-gray-100 text-gray-900 p-3 rounded border border-gray-300 outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent mb-4"
+                className="w-full bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 p-3 rounded border border-gray-300 dark:border-gray-600 outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent mb-4"
               />
               <div className="space-y-2 max-h-[500px] overflow-y-auto">
                 {searchResult.map((exercise) => (
                   <div
                     key={exercise.id}
-                    className="flex items-center justify-between p-3 border border-gray-200 rounded mb-2"
+                    className="flex items-center justify-between p-3 border border-gray-200 dark:border-gray-700 rounded mb-2"
                   >
                     <div>
-                      <p className="font-medium text-gray-900 text-sm">
+                      <p className="font-medium text-gray-900 dark:text-white text-sm">
                         {exercise.name}
                       </p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
                         {exercise.muscleGroup}
                       </p>
                     </div>
