@@ -1,6 +1,6 @@
 # Gym Tracker Frontend
 
-React frontend for the Gym Tracker Application.
+A workout tracking app built with React. Live demo: https://gym-tracker-frontend-xi.vercel.app
 
 ## Tech Stack
 
@@ -8,17 +8,21 @@ React frontend for the Gym Tracker Application.
 - Vite
 - Axios
 - React Router
+- Tailwind CSS
 
 ## Features
 
 - User authentication (login/register)
-- View and create workout templates
-- Add exercises to template
-- Start workout sessions
-- Active workout tracking
+- View, create, edit and delete workout templates
+- Add and reorder exercises in template
+- Start workout sessions from template
+- Track sets, reps and weight during active workouts
+- View past workout sessions
+- Dark mode support
 
 ## Running the project
 
 - Run `npm install`
 - Run `npm run dev`
-- Make sure the GymTracker API is runnin
+- Create a `.env.local` file with `VITE_API_URL=https://localhost:7149`
+- Make sure the GymTracker API is running
